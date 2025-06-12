@@ -8,7 +8,7 @@
 # Prerequisites
 - Java 17
 - Maven for build
-  https://github.com/iamsheshanand/java-8.git
+
 
 # Backend
 1. Clone https://github.com/iamsheshanand/citybackend.git
