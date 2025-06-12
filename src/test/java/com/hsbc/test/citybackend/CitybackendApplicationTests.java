@@ -1,10 +1,13 @@
 package com.hsbc.test.citybackend;
 
+import com.hsbc.test.citybackend.dto.CityCountResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
+
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CitybackendApplicationTests {
@@ -18,7 +21,7 @@ class CitybackendApplicationTests {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Long.class).isEqualTo(1L);
+                .expectBody(CityCountResponse.class).isEqualTo(new CityCountResponse(1L, List.of("Yafran")));
 
     }
 
@@ -28,7 +31,7 @@ class CitybackendApplicationTests {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Long.class).isEqualTo(3L);
+                .expectBody(CityCountResponse.class).isEqualTo(new CityCountResponse(3L, List.of("Zuwarah", "Zawiya", "Zlitan")));
 
     }
 
@@ -38,7 +41,7 @@ class CitybackendApplicationTests {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange()
                 .expectStatus().isOk()
-                .expectBody(Long.class).isEqualTo(0L);
+                .expectBody(CityCountResponse.class).isEqualTo(new CityCountResponse(0L, List.of()));
 
     }
 

@@ -1,10 +1,12 @@
 package com.hsbc.test.citybackend.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.hsbc.test.citybackend.dto.CityCountResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 @Service
@@ -15,9 +17,9 @@ public class CityService {
     public CityService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://samples.openweathermap.org").build();
     }
-    public Long findCitiesStartingWith(String letter) {
+    public CityCountResponse findCitiesStartingWith(String letter) {
         if (letter == null || letter.trim().isEmpty()) {
-            return 0L;
+            return new CityCountResponse(0L, List.of());
         }
 
         String firstLetter = letter.trim().toLowerCase().substring(0, 1);
@@ -30,16 +32,19 @@ public class CityService {
             JsonNode retrievedResponseNode = retrievedResponse.block();
 
             if (retrievedResponseNode == null || !retrievedResponseNode.has("list")) {
-                return 0L;
+                return new CityCountResponse(0L, List.of());
             }
-            return StreamSupport.stream(
+            List<String> matchedCities =  StreamSupport.stream(
                             retrievedResponseNode.get("list").spliterator(), false)
                     .filter(node -> node.has("name") &&
                                     node.get("name").asText().toLowerCase().startsWith(firstLetter))
-                    .count();
+                    .map(node -> node.get("name").asText())
+                    .toList();
+
+            return new CityCountResponse((long) matchedCities.size(), matchedCities);
 
         }catch (Exception e){
-            return 0L;
+            return new CityCountResponse(0L, List.of());
         }
     }
 }
