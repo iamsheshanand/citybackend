@@ -22,4 +22,4 @@
 
 ```
 
-Once it starts successfully navigate to http://localhost:8080
+Once it starts successfully navigate to `http://localhost:8080` and access API as `http://localhost:8080/cities/count?letter=Z`
