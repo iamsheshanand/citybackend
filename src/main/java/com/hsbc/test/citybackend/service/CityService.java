@@ -1,7 +1,6 @@
 package com.hsbc.test.citybackend.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -13,7 +12,7 @@ public class CityService {
 
     private final WebClient webClient;
 
-    public CityService(WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
+    public CityService(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://samples.openweathermap.org").build();
     }
     public Long findCitiesStartingWith(String letter) {

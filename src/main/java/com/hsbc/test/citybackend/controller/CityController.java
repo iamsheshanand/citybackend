@@ -1,6 +1,7 @@
 package com.hsbc.test.citybackend.controller;
 
 import com.hsbc.test.citybackend.service.CityService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +16,7 @@ public class CityController {
         this.cityService = cityService;
     }
 
-    @GetMapping("/cities/count")
+    @GetMapping(value = "/cities/count", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Long> cityCount(@RequestParam(name = "letter", required = false) String letter) {
         return ResponseEntity.ok(cityService.findCitiesStartingWith(letter)) ;
     }
