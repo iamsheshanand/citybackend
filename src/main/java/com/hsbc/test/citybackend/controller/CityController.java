@@ -18,7 +18,7 @@ public class CityController {
     }
 
     @GetMapping(value = "/cities/count", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CityCountResponse> cityCount(@RequestParam(name = "letter", required = false) String letter) {
+    public ResponseEntity<CityCountResponse> cityCount(@RequestParam(name = "letter", required = true) String letter) {
         return ResponseEntity.ok(cityService.findCitiesStartingWith(letter)) ;
     }
 }
